@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Ensemble in Statistical Learning</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mateus Maia     Orientador: Anderson Ara     Programa de Pós-Graduação em Matemática com Concetração em Estatística" />
+    <meta name="date" content="2019-08-15" />
+    <link href="xaringan_ninja_files/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="example.css" type="text/css" />
+    <link rel="stylesheet" href="maia-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Ensemble in Statistical Learning
+## ⚔ <br/>An study on Bagging and Boosting Approaches
+### Mateus Maia <br/> <br/> Orientador: Anderson Ara <br/> <br/> Programa de Pós-Graduação em Matemática com Concetração em Estatística <br/> <br/>
+### 2019-08-15
+
+---
+
+
+
+
+# Introduction: Supervised Statistical Learning
+
+- Suppouse `\({\displaystyle X}\)` as the vector space of all possible observations.
+
+- Suppouse `\({\displaystyle Y}\)` as the vector space of all possible outcomes from the observations.
+
+- Given the space of functions `\({\mathcal {H}}\)` that `\(f:X\to Y\)`
+
+### The main objective is to estimate a function `\(\hat{f}\)`, from `\({\vec  {x}} \in {\displaystyle X}\)`, and `\(y \in {\displaystyle Y}\)`, such that `\(\hat{f}({\vec  {x}})\sim y\)`.
+
+---
+#The true **blackbox**
+
+.center[![The true Black Box. Adapted image from Breiman, L., 2001](the_true_black_box_resize-01.png)]
+&lt;br/&gt;
+&lt;br/&gt;
+
+.center[ Adapted image from Breiman, L., 2001]
+
+---
+class: inverse, center, middle
+
+# Ensemble Methods
+
+---
+
+# Ensemble Models
+
+.center[![](judges-01.png)]
+
+---
+
+# Ensemble Models
+
+.center[![](judges_models-01.png)]
+
+
+---
+# Bagging and Boosting
+
+&lt;br/&gt;
+&lt;br/&gt;
+.center[![](ensemble_methods-2-01.png)]
+
+
+---
+# Ensemble Methods
+
+
+.pull-left[
+
+## Bagging
+
+1. Bagging predictors (Breiman, Leo; 1996)
+
+1. The Random Subspace Method for Constructing Decision Forests (Ho, T.K; 1998)
+
+1. Random Forests (Breiman, Leo; 2001)
+
+]
+
+.pull-right[
+
+##Boosting
+
+1. Adaptative Boosting (Freund and Schapire,1999)
+
+1. Gradient Boosting (Friedman, 2001)
+
+1. Stochastic Gradient Boosting (Friedman, 2002)
+
+1. eXtreme Gradient Boosting (Chen, et. al, 2016)
+
+1. LightBoosting (Ke, et. al, 2017)]
+
+---
+
+# The importance of Ensemble Methods
+
+- The KDD-Cup: The years of (2009-2011) all the first-place and second-place winners used ensemble methods.
+
+- Netflix Prize ($1,000,000).
+
+- Kaggle's Competitions: Among the 29 challenge winning solutions published at Kaggle’s blog during 2015, 17 solutions used XGBoost.
+---
+
+class: inverse, center, middle
+
+# Bagging
+
+---
+
+##.center[*Booststraping Aggregation*]
+
+### Regression Problems
+ `$$\hat{F}_{bag}(\mathbf{x})=\frac{1}{B}\sum_{b=1}^{B}\hat{f}_{b}(\mathbf{x})$$`
+### Classification Problems
+ `$$\hat{F}_{bag}(\mathbf{x})=sign\left(\sum_{b=1}^{B}\hat{f}_{b}(\mathbf{x})\right)$$`
+
+---
+# Bagging: Pseudo code
+1. Sample, with replacement, a *b* dataset of the same size as the whole data set ( *B* bootstraping samples).
+
+--
+
+1. Train a models to each boostrap sample.
+
+--
+1. The ensemble prediction is given by:
+
+   **the mean** from all predictions from models (for regression tasks)&lt;br/&gt;
+   
+   **the majority vote** among all models (for classification tasks)
+
+
+---
+# The Random Subspace Method for Constructing Decision Forests
+
+.pull-left[
+.center[![](tinkanho_picture.jpg)]
+.center[Tin Kam Ho]
+]
+
+.pull-right[
+###"It is important to note that forest accuracy is affected by both the individual tree accuracy and the agreement between the trees.  [...]
+###Ideally, one should look for the best individual trees with lowest similarity." 
+]
+
+---
+# Agreement and Similarity Between Models
+
+.center[![](tree_agreement.png)]
+
+.center[Tin Kam Ho]
+
+---
+# Random Forests
+
+.pull-left[
+.center[![](leo_breiman_and_pearson.png)]
+.center[Leo Breiman]
+
+]
+
+.pull-right[
+Random forests are a combination of bagged tree predictors such that each tree depends on the values of a random vector sampled independently and with the same distribution for all trees in the forest.
+]
+
+
+---
+
+# Random Forests
+
+
+.pull-left[
+.center[![](leo_breiman_and_pearson.png)]
+.center[Leo Breiman]
+
+]
+
+.pull-right[
+### "Our results indicate that better (lower generalization error) random forests have lower correlation between classifiers and higher strength. The randomness used in tree construction has to aim for low correlation `\(\bar{\rho}\)` while maintaining reasonable strength."
+]
+
+---
+
+class: inverse, center, middle
+
+# Bagging
+
+
+## Strength vs. Correlation
+
+---
+# Strength vs. Correlation
+
+&lt;br/&gt;
+
+&lt;br/&gt;
+
+.center[
+- What are others ways to explore the relationship between Strength and Correlation between models that compose the bagging ?
+
+- How measure correlation between different models ?
+]
+
+---
+class: inverse, center, middle
+
+#Boosting
+
+---
+#Boosting
+
+.center[![](boosting_methods.png)]
+
+---
+
+
+# AdaBoosting
+
+Given `$$\mathbf{y}\in\{1,-1\}$$`
+&lt;br/&gt;
+&lt;br/&gt;
+
+`$$G(\mathbf{x})=sign \left(\sum_{m=1}^{M} \alpha_{m}g_{m}(\mathbf{x}) \right)$$`
+
+--
+&lt;br/&gt;
+&lt;br/&gt;
+##.center[The weighted wisdom of a crowd of experts]
+
+
+---
+# AdaBoosting
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+.center[![](boosted_trees_process.png)]
+
+---
+.center[#Suppose we have a computationally efficient learning algorithm that can generate a hypothesis which is slightly better than random guessing for any distribution over the inputs. Does the existence of such a ‘‘weak’’ learning algorithm imply the existence of an efficient ‘‘strong’’ learning algorithm that can generate arbitrarily accurate hypotheses?]
+
+---
+class: inverse, center, middle
+
+# Yes 
+
+(Schapire and Freund, 1998)
+
+---
+# A systematic comparison between different base learners in AdaBoosting model
+
+- Compare different common models in their simplest form (weak learner)
+
+- Test the perfomance over 10 different datasets
+
+- Validation: 30 Repeated Holdout 
+
+- Split Ratio: 70-30% of Training-Test
+
+
+---
+
+# Models
+
+- **K Nearest Neighbors (KNN)**
+- **Linear Discriminant Analysis**
+- **Logistic Regression** in canonical form.
+- **Neural Networks** with one perceptron.
+- **Support Vector Machines** with the linear kernel.
+- **Decision Trees** with just one split node (Stump Models).
+
+
+---
+# Datasets
+
+.center[![](datasets_description.png)]
+
+---
+
+#Some Results
+
+&lt;img src="plot8.png" width="1235" height="520" /&gt;
+---
+# Final comments
+
+- The ensemble methods in the Statistical Learning field demonstred significante relevance as it has been showed in high predictive capacity.
+
+- There are some open questions which can be explored in the ensemble preceedings, e.g: corelation and strength.
+
+# Future Works
+
+- Comparisson between ensemble methods and others competitive methods
+
+- Explore the strength and corelation between models in order to improve the predictive power of ensemble
+
+- Propose new ensemble methods
+
+---
+##References
+
+- Breiman, Leo. "Statistical modeling: The two cultures (with comments and a rejoinder by the author)." Statistical science 16.3 (2001): 199-231.
+
+- Breiman, Leo. "Bagging predictors." Machine learning 24.2 (1996): 123-140.
+
+- Ho, T,K. " The random subspace method for constructing decision forests." IEEE Trans. Pattern Anal. Mach. Intell 20.8 (1998): 1-22.
+
+- Breiman, Leo. "Random forests." Machine learning 45.1 (2001): 5-32.
+
+- Freund, Yoav, Robert Schapire, and Naoki Abe. "A short introduction to boosting." Journal-Japanese Society For Artificial Intelligence 14.771-780 (1999): 1612.
+
+- Friedman, Jerome H. "Greedy function approximation: a gradient boosting machine." Annals of statistics (2001): 1189-1232.
+
+- Friedman, Jerome H. "Stochastic gradient boosting." Computational statistics &amp; data analysis 38.4 (2002): 367-378.
+
+- Chen, Tianqi, et al. "Xgboost: extreme gradient boosting." R package version 0.4-2 (2015): 1-4.
+
+
+---
+##References
+
+- Ke, Guolin, et al. "Lightgbm: A highly efficient gradient boosting decision tree." Advances in Neural Information Processing Systems. 2017.
+
+- Schapire, Robert E., et al. "Boosting the margin: A new explanation for the effectiveness of voting methods." The annals of statistics 26.5 (1998): 1651-1686.
+
+---
+class: title-slide-final, middle
+background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Bras%C3%A3o_da_UFBA.png/300px-Bras%C3%A3o_da_UFBA.png)
+background-size: 85px
+background-position: 9% 15%
+
+# Thanks for your attention!
+
+.pull-down[
+
+&lt;a href="mailto:mateusmaia11@gmail.com"&gt;
+.white[<i class="fas  fa-paper-plane "></i>mateusmaia11@gmail.com]
+&lt;/a&gt;
+
+&lt;a href="https://mateusmaiads.github.io/ensemble_qualify"&gt;
+.white[<i class="fas  fa-link "></i> mateusmaiads.github.io/ensemble_qualify]
+&lt;/a&gt;
+
+&lt;a href="https://twitter.com/MateusMaiaM"&gt;
+.white[<i class="fab  fa-twitter "></i> @MateusMaiaM]
+&lt;/a&gt;
+
+&lt;a href="https://github.com/MateusMaiaDS"&gt;
+.white[<i class="fab  fa-github "></i> @MateusMaiaDS]
+&lt;/a&gt;
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
